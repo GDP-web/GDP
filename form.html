@@ -444,6 +444,35 @@ form.addEventListener("input", () => {
   }
   localStorage.setItem("dietFormData", JSON.stringify(data));
 });
+  // ฟังก์ชันควบคุมการเลือก "ไม่มี"
+function setupExclusiveCheckbox(groupName) {
+  const checkboxes = document.querySelectorAll(`input[name="${groupName}"]`);
+  const noneCheckbox = [...checkboxes].find(cb => cb.value === "ไม่มี" || cb.value === "ไม่เคย");
+
+  if (!noneCheckbox) return;
+
+  noneCheckbox.addEventListener("change", () => {
+    checkboxes.forEach(cb => {
+      if (cb !== noneCheckbox) {
+        cb.disabled = noneCheckbox.checked;
+        if (noneCheckbox.checked) cb.checked = false;
+      }
+    });
+  });
+
+  // รีโหลดหน้าแล้วให้ update สถานะ disable
+  if (noneCheckbox.checked) {
+    checkboxes.forEach(cb => {
+      if (cb !== noneCheckbox) {
+        cb.disabled = true;
+      }
+    });
+  }
+}
+
+// เรียกใช้กับแต่ละกลุ่ม
+["disease", "allergy", "favorite_flavors", "preferred_cooking_methods", "supplements"]
+  .forEach(setupExclusiveCheckbox);
 </script>
 
 </body>
