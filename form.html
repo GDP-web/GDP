@@ -182,11 +182,23 @@
     <label><input type="checkbox" name="allergy" value="นมวัว / Lactose" /> นมวัว / Lactose</label>
     <label><input type="checkbox" name="allergy" value="กลูเตน / แป้งสาลี" /> กลูเตน / แป้งสาลี</label>
     <label><input type="checkbox" name="allergy" value="ถั่วลิสง" /> ถั่วลิสง</label>
-    <label><input type="checkbox" name="allergy" value="ถั่วเปลือกแข็ง เช่น อัลมอนด์ วอลนัท" /> ถั่วเปลือกแข็ง เช่น อัลมอนด์ วอลนัท</label>
-    <label><input type="checkbox" name="allergy" value="อาหารทะเล กุ้ง/หมึก/หอย/ปู" /> อาหารทะเล กุ้ง/หมึก/หอย/ปู</label>
+    <label style="grid-column: span 2;">
+      <input type="checkbox" name="allergy" value="ถั่วเปลือกแข็ง" id="nut-allergy" /> ถั่วเปลือกแข็ง</label>
+        <div id="nut-detail" style="display: none; grid-column: span 2;">
+          <input type="text" name="nut_detail" placeholder="ระบุเพิ่มเติม" style="width: 100%; padding: 8px; font-size: 1rem;" />
+        </div>
+    <label style="grid-column: span 2;">
+      <input type="checkbox" name="allergy" value="อาหารทะเล" id="seafood-allergy" /> อาหารทะเล</label>
+        <div id="seafood-detail" style="display: none; grid-column: span 2;">
+          <input type="text" name="seafood_detail" placeholder="ระบุเพิ่มเติม" style="width: 100%; padding: 8px; font-size: 1rem;" />
+        </div>
     <label><input type="checkbox" name="allergy" value="ไข่" /> ไข่</label>
     <label><input type="checkbox" name="allergy" value="ถั่วเหลือง" /> ถั่วเหลือง</label>
-    <label><input type="checkbox" name="allergy" value="ผลไม้บางชนิด" /> ผลไม้บางชนิด</label>
+    <label style="grid-column: span 2;">
+      <input type="checkbox" name="allergy" value="ผลไม้บางชนิด" id="fruit-allergy" /> ผลไม้บางชนิด</label>
+        <div id="fruit-detail" style="display: none; grid-column: span 2;">
+          <input type="text" name="fruit_detail" placeholder="ระบุเพิ่มเติม" style="width: 100%; padding: 8px; font-size: 1rem;" />
+        </div>
     <label><input type="checkbox" name="allergy" value="ผงชูรส" /> ผงชูรส</label>
   </div>
 
@@ -473,7 +485,31 @@ function setupExclusiveCheckbox(groupName) {
 // เรียกใช้กับแต่ละกลุ่ม
 ["disease", "allergy", "favorite_flavors", "preferred_cooking_methods", "supplements"]
   .forEach(setupExclusiveCheckbox);
-</script>
+  const seafoodCheckbox = document.getElementById("seafood-allergy");
+  const seafoodDetail = document.getElementById("seafood-detail");
 
+  seafoodCheckbox.addEventListener("change", () => {
+    seafoodDetail.style.display = seafoodCheckbox.checked ? "block" : "none";
+  });
+
+  // แสดงช่องพิมพ์ถ้า reload แล้ว checkbox ถูกเลือกอยู่
+  if (seafoodCheckbox.checked) {
+    seafoodDetail.style.display = "block";
+  }
+  const nutCheckbox = document.getElementById("nut-allergy");
+const nutDetail = document.getElementById("nut-detail");
+nutCheckbox.addEventListener("change", () => {
+  nutDetail.style.display = nutCheckbox.checked ? "block" : "none";
+});
+if (nutCheckbox.checked) nutDetail.style.display = "block";
+
+// ผลไม้บางชนิด
+const fruitCheckbox = document.getElementById("fruit-allergy");
+const fruitDetail = document.getElementById("fruit-detail");
+fruitCheckbox.addEventListener("change", () => {
+  fruitDetail.style.display = fruitCheckbox.checked ? "block" : "none";
+});
+if (fruitCheckbox.checked) fruitDetail.style.display = "block";
+</script>
 </body>
 </html>
