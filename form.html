@@ -414,8 +414,12 @@ if (file && file.type.startsWith("image/")) {
       }
     );
 
+    const json = await response.json();
+    console.log("Gemini full response:", json);
+
     if (!response.ok) {
-      throw new Error("เกิดข้อผิดพลาดจากเซิร์ฟเวอร์");
+    const msg = json.error?.message || "ไม่สามารถเชื่อมต่อ AI";
+    throw new Error(msg);
     }
 
     const json = await response.json();
@@ -542,14 +546,3 @@ if (fruitCheckbox.checked) fruitDetail.style.display = "block";
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
